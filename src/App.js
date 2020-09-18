@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import ReactMapGL, { Marker } from "react-map-gl";
 import "./App.css";
-import data from "./data/data.json";
+// import data from "./data/data.json";
+import datageo from "./data/datageo.json";
 // import * as data from "./data/data.json";
 // import * as d3 from "d3";
 // import Test from "./components/Test";
@@ -17,6 +18,34 @@ export default function App() {
     zoom: 4,
   });
 
+  var geojson = {
+    type: "FeatureCollection",
+    features: [
+      {
+        type: "Feature",
+        geometry: {
+          type: "Point",
+          coordinates: [-77.032, 38.913],
+        },
+        properties: {
+          title: "Mapbox",
+          description: "Washington, D.C.",
+        },
+      },
+      {
+        type: "Feature",
+        geometry: {
+          type: "Point",
+          coordinates: [-122.414, 37.776],
+        },
+        properties: {
+          title: "Mapbox",
+          description: "San Francisco, California",
+        },
+      },
+    ],
+  };
+
   return (
     <div>
       <ReactMapGL
@@ -27,14 +56,19 @@ export default function App() {
         onViewportChange={(viewport) => {
           setViewport(viewport);
         }}
-      >
-        {data.map((infection) => (
+      
+
+        {features.map((infection) => (
           // Map Connect & Logic
-          <Marker key={data.UID} latitude={data.Lat} longitude={data.Long_}>
+          <Marker
+            
+            latitude={geojson.features.geometry.coordinates[1]}
+            longitude={geojson.features.geometry.coordinates[0]}
+          >
             <div>INFECTION</div>
           </Marker>
         ))}
-      </ReactMapGL>
+></ReactMapGL>
     </div>
   );
 }
