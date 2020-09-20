@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import ReactMapGL, {
   Marker,
   Popup,
-  GeolocateControl,
-  NavigationControl,
+  // GeolocateControl,
+  // NavigationControl,
 } from "react-map-gl";
-import Geocoder from "react-map-gl-geocoder";
+// import Geocoder from "react-map-gl-geocoder";
 import covidData from "./data/geojson.json";
 import Chart from "./components/Chart.js";
 import "./App.css";
@@ -20,6 +20,8 @@ export default function App() {
     zoom: 8,
   });
   const [selectedInfection, setSelectedInfection] = useState(null);
+  const [infectionNumber, setInfectionNumber] = useState([]);
+  const [infectionDate, setInfectionDate] = useState([]);
 
   return (
     <div>
