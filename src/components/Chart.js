@@ -11,32 +11,29 @@ const Chart = () => {
     let infNumber = [];
     let infDate = [];
 
-    Axios.get(
-      "https://drive.google.com/file/d/1kjDSPKBtXDcnbLoAU_wsi6zWfxVxnzUo/view?usp=sharing"
-    )
+    Axios.get("./data/geojson.json")
       .then((res) => {
         console.log(res);
-        for (const dataObj of res.properties) {
-          infNumber.push(parseInt(dataObj.infection_number));
-          infDate.push(parseInt(dataObj.infection_date));
+        for (const features of res.properties) {
+          infNumber.push(parseInt(features.properties.infectionNumber));
+          infDate.push(parseInt(features.properties.infectionDate));
         }
+        setChartData({
+          labels: infDate,
+          datasets: [
+            {
+              label: "Confirmed COVID-19 Infections",
+              data: infNumber,
+              backgroundColor: ["rgba(150, 202, 184, 0.6)"],
+              borderWidth: 2,
+            },
+          ],
+        });
       })
       .catch((err) => {
         console.log(err);
       });
     console.log(infNumber, infDate);
-
-    setChartData({
-      labels: ["March", "April", "May", "June", "July", "August", "September"],
-      datasets: [
-        {
-          label: "Confirmed COVID-19 Infections",
-          data: [10, 20, 30, 40, 50, 60, 90],
-          backgroundColor: ["rgba(150, 202, 184, 0.6)"],
-          borderWidth: 2,
-        },
-      ],
-    });
   };
 
   useEffect(() => {
